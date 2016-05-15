@@ -14,14 +14,17 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+import java.util.ArrayList;
+
 import josh.land.meemeries.MemeBrowser.adapters.MemeBrowserRecyclerViewAdapter;
+import josh.land.meemeries.MemeBrowser.models.Meme;
 import josh.land.meemeries.R;
 
 public class MainBrowserFragment extends Fragment {
-    Firebase myFirebaseRef;
-    RecyclerView recyclerView;
-    MemeBrowserRecyclerViewAdapter recyclerViewAdapter;
-
+    private Firebase myFirebaseRef;
+    private RecyclerView recyclerView;
+    private MemeBrowserRecyclerViewAdapter recyclerViewAdapter;
+    private ArrayList<Meme> receivedMemes = new ArrayList();
 
     public MainBrowserFragment() {
     }
@@ -29,28 +32,34 @@ public class MainBrowserFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        this.myFirebaseRef = new Firebase("https://crackling-inferno-3202.firebaseIO.com/");
-        this.connectToAllMemeEvents();
+        myFirebaseRef = new Firebase(this.getString(R.string.firebaseroot));
+
+        this.bindToAllMemeEvents();
         View v = inflater.inflate(R.layout.fragment_main_browser_with_pull, container, false);
         recyclerView = (RecyclerView) v.findViewById(R.id.main_recycler_view);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        recyclerViewAdapter = (MemeBrowserRecyclerViewAdapter) new MemeBrowserRecyclerViewAdapter();
+
+        recyclerViewAdapter = new MemeBrowserRecyclerViewAdapter(receivedMemes);
         recyclerView.setAdapter(recyclerViewAdapter);
 
         return v;
     }
 
-    private void connectToAllMemeEvents() {
+    private void bindToAllMemeEvents() {
         // Anytime something is "pushed" to memes - this will be called.
-        myFirebaseRef.child("memes").addValueEventListener(new ValueEventListener() {
+        myFirebaseRef.child(this.getString(R.string.firebase_memes_child)).addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                // Registering a listener to memes - when something changes probably
-                // Update the adapter here.
-                Log.i("onDataChange", "Receied Event: " + snapshot.getValue());
-                System.out.println(snapshot.getValue());  //prints "Do you have data? You'll love Firebase."
+                // Registering a listener to memes - when something changes on the server
+                // This will be called and provide the latest json blob of Meme Objects.
+                receivedMemes.clear();
+                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                    Meme meme = postSnapshot.getValue(Meme.class);
+                    receivedMemes.add(meme);
+                }
+                recyclerViewAdapter.setReceivedMemes(receivedMemes);
             }
 
             @Override public void onCancelled(FirebaseError error) {

@@ -16,11 +16,7 @@ import josh.land.meemeries.R;
 public class MemeBrowserRecyclerViewAdapter extends RecyclerView.Adapter<MemeBrowserRecyclerViewAdapter.ViewHolder> {
         private List<Meme> memes = new ArrayList<Meme>();
 
-        // Provide a reference to the views for each data item
-        // Complex data items may need more than one view per item, and
-        // you provide access to all the views for a data item in a view holder
         public static class ViewHolder extends RecyclerView.ViewHolder {
-            // each data item is just a string in this case
             public View view;
             public TextView memeTitle;
             public TextView memeMetaData;
@@ -29,6 +25,9 @@ public class MemeBrowserRecyclerViewAdapter extends RecyclerView.Adapter<MemeBro
             public ViewHolder(View v) {
                 super(v);
                 view = v;
+                memeTitle = (TextView) v.findViewById(R.id.meme_title);
+                memeMetaData = (TextView) v.findViewById(R.id.meme_metadata);
+                memeImage = (ImageView) v.findViewById(R.id.meme_image);
             }
         }
 
@@ -37,23 +36,30 @@ public class MemeBrowserRecyclerViewAdapter extends RecyclerView.Adapter<MemeBro
             memes = availableMemes;
         }
 
-        // Create new views (invoked by the layout manager)
+        public void setReceivedMemes(final List<Meme> receivedMemes) {
+            if (receivedMemes != null && receivedMemes.size() > 0) {
+                this.memes = receivedMemes;
+                this.notifyDataSetChanged();
+            }
+        }
+
         @Override
         public MemeBrowserRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.meme_entry, parent, false);
             return new ViewHolder(v);
         }
 
-        // Replace the contents of a view (invoked by the layout manager)
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
-            // - get element from your dataset at this position
-            // - replace the contents of the view with that element
-//            holder.mTextView.setText(mDataset[position]);
-
+            Meme meme = memes.get(position);
+            if (meme.getTitle() != null && !meme.getTitle().isEmpty()) {
+                holder.memeTitle.setVisibility(View.VISIBLE);
+                holder.memeTitle.setText(meme.getTitle());
+            } else {
+                holder.memeTitle.setVisibility(View.INVISIBLE);
+            }
         }
 
-        // Return the size of your dataset (invoked by the layout manager)
         @Override
         public int getItemCount() {
             return memes.size();

@@ -53,8 +53,9 @@ public class MainBrowser extends AppCompatActivity {
         if (newMeme.getPostedBy() != null && newMeme.getPostedBy().getName() != null &&
                 !newMeme.getPostedBy().getName().isEmpty()) {
             // Set Value will overwrite whatever exists on this node.
-            firebaseRoot.child(newMeme.getPostedBy().getName().toLowerCase())
-            .setValue(newMeme);
+//            firebaseRoot.child()
+//            .setValue(newMeme);
+            firebaseRoot.push().setValue(newMeme);
         }
 
     }

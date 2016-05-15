@@ -1,6 +1,8 @@
 package josh.land.meemeries.MemeBrowser.models;
 
 public class Meme {
+    public static String FireBaseMemesRoot = "memes";
+
     private double id;
     private String title;
     private String imageUrl;

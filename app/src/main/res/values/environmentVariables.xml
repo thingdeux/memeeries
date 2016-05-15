@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="firebaseroot">https://crackling-inferno-3202.firebaseIO.com/</string>
+    <string name="firebase_memes_child">memes</string>
+
+</resources>
