@@ -1,22 +1,28 @@
 package josh.land.meemeries.MemeBrowser.models;
 
 public class Meme {
-    public static String FireBaseMemesRoot = "memes";
-
-    private double id;
+    private Double id;
     private String title;
     private String imageUrl;
-    private MemeUser postedBy;
+    private String postedBy;
+    /*
+         The Memes node is indexed on postedBy - so that querying memes by user is fast.
+         These names will all be set to lowercase in the DB.
+            "memes": {
+                ".indexOn": ["postedBy"]
+            }
+         */
+
     private String postDate;
 
     public Meme() {
     }
 
-    public double getId() {
+    public Double getId() {
         return id;
     }
 
-    public void setId(double id) {
+    public void setId(Double id) {
         this.id = id;
     }
 
@@ -36,11 +42,11 @@ public class Meme {
         this.imageUrl = imageUrl;
     }
 
-    public MemeUser getPostedBy() {
+    public String getPostedBy() {
         return postedBy;
     }
 
-    public void setPostedBy(MemeUser postedBy) {
+    public void setPostedBy(String postedBy) {
         this.postedBy = postedBy;
     }
 

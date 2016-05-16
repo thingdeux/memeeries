@@ -16,12 +16,12 @@ import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
 
+import API.FireBaseAPI;
 import josh.land.meemeries.MemeBrowser.adapters.MemeBrowserRecyclerViewAdapter;
 import josh.land.meemeries.MemeBrowser.models.Meme;
 import josh.land.meemeries.R;
 
 public class MainBrowserFragment extends Fragment {
-    private Firebase myFirebaseRef;
     private RecyclerView recyclerView;
     private MemeBrowserRecyclerViewAdapter recyclerViewAdapter;
     private ArrayList<Meme> receivedMemes = new ArrayList();
@@ -32,8 +32,6 @@ public class MainBrowserFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        myFirebaseRef = new Firebase(this.getString(R.string.firebaseroot));
-
         this.bindToAllMemeEvents();
         View v = inflater.inflate(R.layout.fragment_main_browser_with_pull, container, false);
         recyclerView = (RecyclerView) v.findViewById(R.id.main_recycler_view);
@@ -48,7 +46,9 @@ public class MainBrowserFragment extends Fragment {
 
     private void bindToAllMemeEvents() {
         // Anytime something is "pushed" to memes - this will be called.
-        myFirebaseRef.child(this.getString(R.string.firebase_memes_child)).addValueEventListener(new ValueEventListener() {
+        FireBaseAPI.getInstance().firebaseRoot.child(this.getString(R.string.firebase_memes_child)).addValueEventListener(new ValueEventListener() {
+            // Query Example
+            // Query queryRef = ref.orderByChild("height").equalTo(25);
 
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -59,13 +59,13 @@ public class MainBrowserFragment extends Fragment {
                     Meme meme = postSnapshot.getValue(Meme.class);
                     receivedMemes.add(meme);
                 }
+                // TODO : Take note of the last received meme and only notify recycler from that moment on.
                 recyclerViewAdapter.setReceivedMemes(receivedMemes);
             }
 
             @Override public void onCancelled(FirebaseError error) {
                 Log.e("ERROR", "Connection Error " + error);
             }
-
         });
     }
 }
