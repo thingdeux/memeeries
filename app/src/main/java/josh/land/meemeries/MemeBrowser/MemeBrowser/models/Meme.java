@@ -13,7 +13,7 @@ public class Meme {
             }
          */
 
-    private String postDate;
+    private long postDate;
 
     public Meme() {
     }
@@ -50,11 +50,11 @@ public class Meme {
         this.postedBy = postedBy;
     }
 
-    public String getPostDate() {
+    public long getPostDate() {
         return postDate;
     }
 
-    public void setPostDate(String postDate) {
+    public void setPostDate(long postDate) {
         this.postDate = postDate;
     }
 

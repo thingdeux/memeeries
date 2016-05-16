@@ -19,9 +19,11 @@ public class FireBaseAPI {
     public static FireBaseAPI getInstance() {
         return instance;
     }
+    private String childMeme;
 
     public void initFireBaseConnection(Context context) {
         this.firebaseRoot = new Firebase(context.getString(R.string.firebaseroot));
+        this.childMeme = context.getString(R.string.firebase_memes_child);
     }
 
     private FireBaseAPI() {}
@@ -30,7 +32,7 @@ public class FireBaseAPI {
     public void addMeme(Meme meme) {
         if (meme != null && meme.getTitle() != null && meme.getPostedBy() != null && meme.getImageUrl() != null) {
             if (!meme.getPostedBy().isEmpty()) {
-                firebaseRoot.push().setValue(meme);
+                firebaseRoot.child(childMeme).push().setValue(meme);
             }
         }
     }

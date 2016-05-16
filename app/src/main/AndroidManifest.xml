@@ -27,6 +27,10 @@
             android:label="@string/meme_finder_name"
             android:theme="@style/AppTheme.NoActionBar" />
 
+        <activity
+            android:name=".MemeBrowser.MemeFinder.MemeViewerActivity"
+            android:label="@string/meme_viewer_name" />
+
     </application>
 
 </manifest>

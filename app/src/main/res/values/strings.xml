@@ -1,6 +1,12 @@
 <resources>
+    <!--Activity and App Names-->
     <string name="app_name">Meemeries</string>
     <string name="action_settings">Settings</string>
     <string name="meme_finder_name">Meme Finder</string>
     <string name="imgur_content_description">Imgur Meme Image</string>
+    <string name="meme_viewer_name">Meme Viewer</string>
+
+    <!--Button Text-->
+    <string name="send_to_server_button_text">Send To Server</string>
+    <string name="cancel_button_text">Cancel</string>
 </resources>

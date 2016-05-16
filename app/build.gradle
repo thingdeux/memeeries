@@ -21,12 +21,15 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+    // Google Specific
     compile 'com.android.support:appcompat-v7:23.3.0'
-    compile 'com.android.support:design:23.3.0'
-    compile 'com.firebase:firebase-client-android:2.5.2+'
     compile 'com.android.support:support-v13:23.3.0'
+    compile 'com.android.support:design:23.3.0'
+    compile 'com.android.support:percent:23.3.0'
+    // 3rd Party
+    compile 'com.firebase:firebase-client-android:2.5.2+'
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
-//    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'org.greenrobot:eventbus:3.0.0'
 }
