@@ -1,6 +1,8 @@
 package josh.land.meemeries.MemeBrowser.MemeFinder.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +16,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import josh.land.meemeries.MemeBrowser.MemeFinder.MemeViewerActivity;
 import josh.land.meemeries.MemeBrowser.MemeFinder.models.ImgurGallery;
 import josh.land.meemeries.R;
 
@@ -23,13 +26,11 @@ public class MemeFinderRecyclerAdapter extends RecyclerView.Adapter<MemeFinderRe
 
         public static class ViewHolder extends RecyclerView.ViewHolder {
             public View view;
-            public TextView memeTitle;
             public ImageView memeImage;
 
             public ViewHolder(View v) {
                 super(v);
                 view = v;
-                memeTitle = (TextView) v.findViewById(R.id.imgur_title);
                 memeImage = (ImageView) v.findViewById(R.id.imgur_image);
             }
         }
@@ -57,12 +58,6 @@ public class MemeFinderRecyclerAdapter extends RecyclerView.Adapter<MemeFinderRe
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             ImgurGallery imgurItem = this.imgurGalleries.get(position);
-            if (imgurItem.getTitle() != null && !imgurItem.getTitle().isEmpty()) {
-                holder.memeTitle.setText(imgurItem.getTitle());
-                holder.memeTitle.setVisibility(View.VISIBLE);
-            } else {
-                holder.memeTitle.setVisibility(View.INVISIBLE);
-            }
 
             if (imgurItem.getLink() != null && !imgurItem.getLink().isEmpty()) {
 
@@ -73,9 +68,27 @@ public class MemeFinderRecyclerAdapter extends RecyclerView.Adapter<MemeFinderRe
                         .noFade()
                         .placeholder(R.mipmap.ic_launcher)
                         .into(holder.memeImage);
+
+
+                this.bindImage(holder.memeImage, imgurItem);
             } else {
                 Log.i("API_ERROR", "Empty Image Url");
             }
+        }
+
+        private void bindImage(View v, final ImgurGallery image) {
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.i("CLICKED", image.getTitle());
+//                    Intent intent = new Intent(this, MemeViewerActivity.class);
+//                    intent.putExtra(MemeViewerActivity.EXTRA_CONTACT, contact);
+//                    ActivityOptionsCompat options = ActivityOptionsCompat.
+//                            makeSceneTransitionAnimation(this, (View)ivProfile, "profile");
+//
+//                    startActivity(intent, options.toBundle());
+                }
+            });
         }
 
         private String getImageThumbnailUrlFromUrl(String imageUrl) {
