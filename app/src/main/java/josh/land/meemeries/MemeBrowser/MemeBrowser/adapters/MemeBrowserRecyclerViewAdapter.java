@@ -1,4 +1,4 @@
-package josh.land.meemeries.MemeBrowser.adapters;
+package josh.land.meemeries.MemeBrowser.MemeBrowser.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import josh.land.meemeries.MemeBrowser.models.Meme;
+import josh.land.meemeries.MemeBrowser.MemeBrowser.models.Meme;
 import josh.land.meemeries.R;
 
 public class MemeBrowserRecyclerViewAdapter extends RecyclerView.Adapter<MemeBrowserRecyclerViewAdapter.ViewHolder> {

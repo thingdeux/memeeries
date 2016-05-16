@@ -1,4 +1,4 @@
-package josh.land.meemeries.MemeBrowser.models;
+package josh.land.meemeries.MemeBrowser.MemeBrowser.models;
 
 public class Meme {
     private Double id;

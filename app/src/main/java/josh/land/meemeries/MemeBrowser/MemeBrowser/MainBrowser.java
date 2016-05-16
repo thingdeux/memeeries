@@ -1,14 +1,19 @@
-package josh.land.meemeries.MemeBrowser;
+package josh.land.meemeries.MemeBrowser.MemeBrowser;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.firebase.client.Firebase;
 
-import API.FireBaseAPI;
+import josh.land.meemeries.MemeBrowser.MemeFinder.MemeFinderActivity;
+
+import josh.land.meemeries.MemeBrowser.API.FireBaseAPI;
 import josh.land.meemeries.R;
 
 
@@ -23,6 +28,18 @@ public class MainBrowser extends AppCompatActivity {
         setContentView(R.layout.activity_main_browser);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.browser_fab);
+        if (fab != null) {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), MemeFinderActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
+
     }
 
     @Override

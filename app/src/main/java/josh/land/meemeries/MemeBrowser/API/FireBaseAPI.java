@@ -1,10 +1,10 @@
-package API;
+package josh.land.meemeries.MemeBrowser.API;
 
 import android.content.Context;
 
 import com.firebase.client.Firebase;
 
-import josh.land.meemeries.MemeBrowser.models.Meme;
+import josh.land.meemeries.MemeBrowser.MemeBrowser.models.Meme;
 import josh.land.meemeries.R;
 
 /**

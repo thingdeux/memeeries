@@ -1,4 +1,4 @@
-package josh.land.meemeries.MemeBrowser;
+package josh.land.meemeries.MemeBrowser.MemeBrowser;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -10,15 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
 
-import API.FireBaseAPI;
-import josh.land.meemeries.MemeBrowser.adapters.MemeBrowserRecyclerViewAdapter;
-import josh.land.meemeries.MemeBrowser.models.Meme;
+import josh.land.meemeries.MemeBrowser.API.FireBaseAPI;
+import josh.land.meemeries.MemeBrowser.MemeBrowser.adapters.MemeBrowserRecyclerViewAdapter;
+import josh.land.meemeries.MemeBrowser.MemeBrowser.models.Meme;
 import josh.land.meemeries.R;
 
 public class MainBrowserFragment extends Fragment {
@@ -48,7 +47,7 @@ public class MainBrowserFragment extends Fragment {
         // Anytime something is "pushed" to memes - this will be called.
         FireBaseAPI.getInstance().firebaseRoot.child(this.getString(R.string.firebase_memes_child)).addValueEventListener(new ValueEventListener() {
             // Query Example
-            // Query queryRef = ref.orderByChild("height").equalTo(25);
+            // Query queryRef = ref.orderByChild("postedBy").equalTo("josh");
 
             @Override
             public void onDataChange(DataSnapshot snapshot) {
