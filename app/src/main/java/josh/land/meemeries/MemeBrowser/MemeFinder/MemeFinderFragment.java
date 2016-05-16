@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import josh.land.meemeries.MemeBrowser.MemeFinder.adapters.MemeFinderPaginateListener;
 import josh.land.meemeries.MemeBrowser.MemeFinder.adapters.MemeFinderRecyclerAdapter;
 import josh.land.meemeries.MemeBrowser.MemeFinder.interfaces.ImgurService;
 import josh.land.meemeries.MemeBrowser.MemeFinder.models.ImgurGallery;
@@ -32,17 +33,24 @@ public class MemeFinderFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_meme_finder_with_pull, container, false);
 
         recyclerView = (RecyclerView) v.findViewById(R.id.meme_main_recycler_view);
-        recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 2));
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this.getContext(), 2);
+        recyclerView.setLayoutManager(gridLayoutManager);
 
         recyclerAdapter = new MemeFinderRecyclerAdapter(this.getContext());
         recyclerView.setAdapter(recyclerAdapter);
+        recyclerView.addOnScrollListener(new MemeFinderPaginateListener(gridLayoutManager) {
+            @Override
+            public void onLoadMore(int current_page) {
+                getLatestImgurGalleries("" + (current_page - 1), true);
+            }
+        });
 
-        getLatestImgurGalleries();
+        getLatestImgurGalleries("0", false);
 
         return v;
     }
 
-    private void getLatestImgurGalleries() {
+    private void getLatestImgurGalleries(String page, final boolean isPaginating) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.imgur.com/3/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -50,15 +58,12 @@ public class MemeFinderFragment extends Fragment {
 
         ImgurService service = retrofit.create(ImgurService.class);
 
-        Call<ImgurGalleryWrapper> images = service.listViralGalleries("0");
+        Call<ImgurGalleryWrapper> images = service.listMemeGalleries(page);
         images.enqueue(new Callback<ImgurGalleryWrapper>() {
             @Override
             public void onResponse(Call<ImgurGalleryWrapper> imgurWrapper, Response<ImgurGalleryWrapper> response) {
                 if (response.isSuccessful()) {
-                    Log.i("ImgurAPI", "Received Imgur Gallery");
-                    refreshAdapter(
-                        ImgurGallery.stripGalleriesAndNSFW(response.body().getData())
-                    );
+                    refreshAdapter(ImgurGallery.stripGalleriesAndNSFW(response.body().getData()), isPaginating);
                 } else {
                     Log.e("ImgurAPI", "Error retrieving Imgur");
                 }
@@ -71,11 +76,13 @@ public class MemeFinderFragment extends Fragment {
         });
     }
 
-
-
-    private void refreshAdapter(List<ImgurGallery> images) {
+    private void refreshAdapter(List<ImgurGallery> images, boolean isPaginating) {
         if (images != null) {
-            recyclerAdapter.setImgurGalleries(images);
+            if (isPaginating) {
+                recyclerAdapter.addImgurGalleries(images);
+            } else {
+                recyclerAdapter.setImgurGalleries(images);
+            }
         }
     }
 }

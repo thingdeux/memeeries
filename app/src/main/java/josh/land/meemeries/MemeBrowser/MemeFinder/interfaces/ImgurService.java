@@ -18,7 +18,13 @@ public interface ImgurService {
     @Headers({
             "Authorization: Client-ID 7f6ad80b210cbac"
     })
-    @GET("gallery/hot/viral/{id}.json")
-    Call<ImgurGalleryWrapper> listViralGalleries(@Path("id") String id);
+    @GET("gallery/hot/viral/{page}.json")
+    Call<ImgurGalleryWrapper> listViralGalleries(@Path("page") String pageNumber);
+
+    @Headers({
+            "Authorization: Client-ID 7f6ad80b210cbac"
+    })
+    @GET("g/memes/{page}.json")
+    Call<ImgurGalleryWrapper> listMemeGalleries(@Path("page") String pageNumber);
 
 }

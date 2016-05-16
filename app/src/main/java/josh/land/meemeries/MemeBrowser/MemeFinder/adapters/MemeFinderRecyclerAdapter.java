@@ -43,6 +43,11 @@ public class MemeFinderRecyclerAdapter extends RecyclerView.Adapter<MemeFinderRe
             this.notifyDataSetChanged();
         }
 
+        public void addImgurGalleries(List<ImgurGallery> galleries) {
+            this.imgurGalleries.addAll(galleries);
+            this.notifyDataSetChanged();
+        }
+
         @Override
         public MemeFinderRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.imgur_entry, parent, false);
