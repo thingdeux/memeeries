@@ -62,7 +62,7 @@ public class MemeFinderRecyclerAdapter extends RecyclerView.Adapter<MemeFinderRe
             if (imgurItem.getLink() != null && !imgurItem.getLink().isEmpty()) {
 
                 Picasso.with(this.mContext)
-                        .load(this.getImageThumbnailUrlFromUrl(imgurItem.getLink()))
+                        .load(ImgurGallery.getImageThumbnailUrlFromUrl(imgurItem.getLink()))
                         .centerCrop()
                         .resize(160, 160)
                         .noFade()
@@ -87,16 +87,6 @@ public class MemeFinderRecyclerAdapter extends RecyclerView.Adapter<MemeFinderRe
                     context.startActivity(intent);
                 }
             });
-        }
-
-        private String getImageThumbnailUrlFromUrl(String imageUrl) {
-            if (imageUrl != null && imageUrl.indexOf(".") > 0 && !imageUrl.endsWith("gif")) {
-                String extension = imageUrl.substring(imageUrl.lastIndexOf("."), imageUrl.length());
-                return imageUrl.substring(0, imageUrl.lastIndexOf(".")) + "m" + extension;
-            } else {
-                return imageUrl;
-            }
-
         }
 
         @Override

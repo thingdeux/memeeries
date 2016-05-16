@@ -1,5 +1,6 @@
 package josh.land.meemeries.MemeBrowser.MemeBrowser.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,14 +8,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import josh.land.meemeries.MemeBrowser.MemeBrowser.models.Meme;
+import josh.land.meemeries.MemeBrowser.MemeFinder.models.ImgurGallery;
 import josh.land.meemeries.R;
 
 public class MemeBrowserRecyclerViewAdapter extends RecyclerView.Adapter<MemeBrowserRecyclerViewAdapter.ViewHolder> {
-        private List<Meme> memes = new ArrayList<Meme>();
+        private List<Meme> memes = new ArrayList<>();
+        private Context mContext;
 
         public static class ViewHolder extends RecyclerView.ViewHolder {
             public View view;
@@ -26,14 +31,15 @@ public class MemeBrowserRecyclerViewAdapter extends RecyclerView.Adapter<MemeBro
                 super(v);
                 view = v;
                 memeTitle = (TextView) v.findViewById(R.id.meme_title);
-                memeMetaData = (TextView) v.findViewById(R.id.meme_metadata);
+                memeMetaData = (TextView) v.findViewById(R.id.meme_postedby);
                 memeImage = (ImageView) v.findViewById(R.id.meme_image);
             }
         }
 
         // Provide a suitable constructor (depends on the kind of dataset)
-        public MemeBrowserRecyclerViewAdapter(final List<Meme> availableMemes) {
+        public MemeBrowserRecyclerViewAdapter(final List<Meme> availableMemes, Context context) {
             memes = availableMemes;
+            this.mContext = context;
         }
 
         public void setReceivedMemes(final List<Meme> receivedMemes) {
@@ -57,6 +63,28 @@ public class MemeBrowserRecyclerViewAdapter extends RecyclerView.Adapter<MemeBro
                 holder.memeTitle.setText(meme.getTitle());
             } else {
                 holder.memeTitle.setVisibility(View.INVISIBLE);
+            }
+
+            if (meme.getImageUrl() != null) {
+                holder.memeImage.setVisibility(View.VISIBLE);
+                Picasso.with(this.mContext)
+                        .load(ImgurGallery.getImageThumbnailUrlFromUrl(meme.getImageUrl()))
+                        .centerCrop()
+                        .resize(160, 160)
+                        .noFade()
+                        .placeholder(R.mipmap.ic_launcher)
+                        .into(holder.memeImage);
+            } else {
+                holder.memeImage.setVisibility(View.INVISIBLE);
+            }
+
+            if (meme.getPostedBy() != null && !meme.getPostedBy().isEmpty()) {
+                holder.memeMetaData.setVisibility(View.VISIBLE);
+                holder.memeMetaData.setEnabled(true);
+                holder.memeMetaData.setText(meme.getPostedBy());
+            } else {
+                holder.memeMetaData.setText("Unknown");
+                holder.memeMetaData.setEnabled(false);
             }
         }
 

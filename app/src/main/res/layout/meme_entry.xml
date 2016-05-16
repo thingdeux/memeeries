@@ -8,21 +8,30 @@
     android:layout_marginBottom="8dp"
     >
 
-    <TextView
-        android:id="@+id/meme_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <ImageView
         android:id="@+id/meme_image"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/meme_title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/meme_title"
+        android:layout_toEndOf="@id/meme_image"
+        style="@style/Base.TextAppearance.AppCompat.Large"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="4dp"
         />
 
     <TextView
-        android:id="@+id/meme_metadata"
+        android:id="@+id/meme_postedby"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/meme_image"/>
+        android:layout_toEndOf="@id/meme_image"
+        android:layout_below="@id/meme_title"
+        style="@style/Base.TextAppearance.AppCompat.Small"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="4dp"
+
+        />
 </RelativeLayout>

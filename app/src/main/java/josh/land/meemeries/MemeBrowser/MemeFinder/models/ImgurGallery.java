@@ -232,4 +232,13 @@ public class ImgurGallery {
         }
         return null;
     }
+
+    public static String getImageThumbnailUrlFromUrl(String imageUrl) {
+        if (imageUrl != null && imageUrl.indexOf(".") > 0 && !imageUrl.endsWith("gif")) {
+            String extension = imageUrl.substring(imageUrl.lastIndexOf("."), imageUrl.length());
+            return imageUrl.substring(0, imageUrl.lastIndexOf(".")) + "m" + extension;
+        } else {
+            return imageUrl;
+        }
+    }
 }

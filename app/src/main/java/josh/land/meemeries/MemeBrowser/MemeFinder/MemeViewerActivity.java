@@ -81,6 +81,8 @@ public class MemeViewerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 sendToServer();
+                Toast.makeText(MemeViewerActivity.this, "Sent to Server", Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
     }

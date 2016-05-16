@@ -37,7 +37,7 @@ public class MainBrowserFragment extends Fragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
-        recyclerViewAdapter = new MemeBrowserRecyclerViewAdapter(receivedMemes);
+        recyclerViewAdapter = new MemeBrowserRecyclerViewAdapter(receivedMemes, this.getContext());
         recyclerView.setAdapter(recyclerViewAdapter);
 
         return v;
