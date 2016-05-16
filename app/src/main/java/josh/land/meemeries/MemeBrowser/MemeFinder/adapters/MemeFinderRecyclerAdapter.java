@@ -2,13 +2,14 @@ package josh.land.meemeries.MemeBrowser.MemeFinder.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,14 +60,28 @@ public class MemeFinderRecyclerAdapter extends RecyclerView.Adapter<MemeFinderRe
             }
 
             if (imgurItem.getLink() != null && !imgurItem.getLink().isEmpty()) {
-                Glide
-                .with(this.mContext)
-                .load(imgurItem.getLink())
-                .centerCrop()
-                .placeholder(R.mipmap.ic_launcher)
-                .crossFade()
-                .into(holder.memeImage);
+
+                Picasso.with(this.mContext)
+                        .load(this.getImageThumbnailUrlFromUrl(imgurItem.getLink()))
+                        .centerCrop()
+                        .resize(160, 160)
+                        .noFade()
+                        .placeholder(R.mipmap.ic_launcher)
+                        .into(holder.memeImage);
+            } else {
+                Log.i("API_ERROR", "Empty Image Url");
             }
+        }
+
+        private String getImageThumbnailUrlFromUrl(String imageUrl) {
+            if (imageUrl != null && imageUrl.indexOf(".") > 0 && !imageUrl.endsWith("gif")) {
+                String extension = imageUrl.substring(imageUrl.lastIndexOf("."), imageUrl.length());
+                String newURL = imageUrl.substring(0, imageUrl.lastIndexOf(".")) + "m" + extension;
+                return newURL;
+            } else {
+                return imageUrl;
+            }
+
         }
 
         @Override

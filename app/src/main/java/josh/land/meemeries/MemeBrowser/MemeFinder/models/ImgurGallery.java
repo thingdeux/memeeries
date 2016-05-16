@@ -3,6 +3,9 @@ package josh.land.meemeries.MemeBrowser.MemeFinder.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ImgurGallery {
     @SerializedName("id")
     @Expose
@@ -212,5 +215,21 @@ public class ImgurGallery {
 
     public void setAlbum(Boolean album) {
         isAlbum = album;
+    }
+
+    public static List<ImgurGallery> stripGalleriesAndNSFW(final List<ImgurGallery> images) {
+        if (images != null) {
+            ArrayList<ImgurGallery> purgedList = new ArrayList<>();
+            for (ImgurGallery image: images) {
+                // Simply bail if we can't determine if the object is in a gallery or NSFW
+                if (image != null && image.getInGallery() != null && image.getNsfw() != null) {
+                    if (!image.isAlbum && !image.getNsfw()) {
+                        purgedList.add(image);
+                    }
+                }
+            }
+            return purgedList;
+        }
+        return null;
     }
 }

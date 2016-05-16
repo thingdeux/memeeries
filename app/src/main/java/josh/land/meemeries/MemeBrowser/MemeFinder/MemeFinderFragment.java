@@ -56,7 +56,9 @@ public class MemeFinderFragment extends Fragment {
             public void onResponse(Call<ImgurGalleryWrapper> imgurWrapper, Response<ImgurGalleryWrapper> response) {
                 if (response.isSuccessful()) {
                     Log.i("ImgurAPI", "Received Imgur Gallery");
-                    refreshAdapter(response.body().getData());
+                    refreshAdapter(
+                        ImgurGallery.stripGalleriesAndNSFW(response.body().getData())
+                    );
                 } else {
                     Log.e("ImgurAPI", "Error retrieving Imgur");
                 }
@@ -68,6 +70,8 @@ public class MemeFinderFragment extends Fragment {
             }
         });
     }
+
+
 
     private void refreshAdapter(List<ImgurGallery> images) {
         if (images != null) {
