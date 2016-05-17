@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.firebase.client.Firebase;
 
-import josh.land.meemeries.MemeBrowser.MemeBrowser.models.Meme;
+import josh.land.meemeries.MemeBrowser.API.models.Meme;
 import josh.land.meemeries.R;
 
 /**

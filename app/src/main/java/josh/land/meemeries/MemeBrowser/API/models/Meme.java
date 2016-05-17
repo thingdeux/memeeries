@@ -1,6 +1,6 @@
-package josh.land.meemeries.MemeBrowser.MemeBrowser.models;
+package josh.land.meemeries.MemeBrowser.API.models;
 
-public class Meme {
+public class Meme implements Comparable<Meme> {
     private Double id;
     private String title;
     private String imageUrl;
@@ -71,4 +71,9 @@ public class Meme {
                 "post_date": "2015-08-05T08:40:51.620Z",
             },
      */
+
+    @Override
+    public int compareTo(Meme other) {
+        return Long.compare(this.postDate, other.postDate);
+    }
 }

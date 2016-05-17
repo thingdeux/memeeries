@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
+import josh.land.meemeries.MemeBrowser.API.models.Meme;
+
 public class ImgurGallery {
     @SerializedName("id")
     @Expose
@@ -240,5 +242,15 @@ public class ImgurGallery {
         } else {
             return imageUrl;
         }
+    }
+
+    public static ImgurGallery memeToGallery(Meme meme) {
+        ImgurGallery newGallery = new ImgurGallery();
+        if (meme.getTitle() != null && meme.getImageUrl() != null) {
+            newGallery.setTitle(meme.getTitle());
+            newGallery.setLink(meme.getImageUrl());
+            return newGallery;
+        }
+        return null;
     }
 }

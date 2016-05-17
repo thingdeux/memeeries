@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 import josh.land.meemeries.MemeBrowser.API.FireBaseAPI;
 import josh.land.meemeries.MemeBrowser.MemeBrowser.adapters.MemeBrowserRecyclerViewAdapter;
-import josh.land.meemeries.MemeBrowser.MemeBrowser.models.Meme;
+import josh.land.meemeries.MemeBrowser.API.models.Meme;
 import josh.land.meemeries.R;
 
 public class MainBrowserFragment extends Fragment {
@@ -45,7 +45,9 @@ public class MainBrowserFragment extends Fragment {
 
     private void bindToAllMemeEvents() {
         // Anytime something is "pushed" to memes - this will be called.
-        FireBaseAPI.getInstance().firebaseRoot.child(this.getString(R.string.firebase_memes_child)).addValueEventListener(new ValueEventListener() {
+        FireBaseAPI.getInstance().firebaseRoot.child(this.getString(R.string.firebase_memes_child))
+                .orderByChild("postDate")
+                .addValueEventListener(new ValueEventListener() {
             // Query Example
             // Query queryRef = ref.orderByChild("postedBy").equalTo("josh");
 

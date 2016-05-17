@@ -3,6 +3,7 @@ package josh.land.meemeries.MemeBrowser.MemeBrowser;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -12,9 +13,11 @@ import android.view.View;
 
 import com.firebase.client.Firebase;
 
+import josh.land.meemeries.MemeBrowser.MemeBrowser.dialogs.UsernameEntryDialog;
 import josh.land.meemeries.MemeBrowser.MemeFinder.MemeFinderActivity;
 
 import josh.land.meemeries.MemeBrowser.API.FireBaseAPI;
+import josh.land.meemeries.MemeBrowser.Utils.SharedPrefManager;
 import josh.land.meemeries.R;
 
 
@@ -41,6 +44,18 @@ public class MainBrowser extends AppCompatActivity {
             });
         }
 
+        if (SharedPrefManager.getUsername(this) == null) {
+            // Prompt for username if one hasn't been set.
+            UsernameEntryDialog dialog = new UsernameEntryDialog();
+            dialog.show(getSupportFragmentManager(), "Enter Username Fragment");
+        }
+
+    }
+
+    private void showEnterNameDialog() {
+        // Prompt for username if one hasn't been set.
+        UsernameEntryDialog dialog = new UsernameEntryDialog();
+        dialog.show(getSupportFragmentManager(), "Enter Username Fragment");
     }
 
     @Override
@@ -58,7 +73,8 @@ public class MainBrowser extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_set_username) {
+            this.showEnterNameDialog();
             return true;
         }
 

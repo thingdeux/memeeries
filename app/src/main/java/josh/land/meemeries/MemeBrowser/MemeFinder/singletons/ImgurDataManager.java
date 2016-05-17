@@ -12,7 +12,8 @@ import josh.land.meemeries.MemeBrowser.MemeFinder.models.ImgurGallery;
  */
 public class ImgurDataManager {
     private List<ImgurGallery> imgurImages = new ArrayList<>();
-    private Integer currentlySelectedImage = null;
+    private Integer currentlySelectedImagePosition = null;
+    private ImgurGallery selectedImage;
 
     private static final ImgurDataManager instance = new ImgurDataManager();
     public static ImgurDataManager getInstance() {
@@ -29,10 +30,18 @@ public class ImgurDataManager {
     }
 
     public Integer getCurrentlySelectedImage() {
-        return currentlySelectedImage;
+        return currentlySelectedImagePosition;
     }
 
     public void setCurrentlySelectedImage(Integer currentlySelectedImage) {
-        this.currentlySelectedImage = currentlySelectedImage;
+        this.currentlySelectedImagePosition = currentlySelectedImage;
+    }
+
+    public ImgurGallery getSelectedImage() {
+        return selectedImage;
+    }
+
+    public void setSelectedImage(ImgurGallery selectedImage) {
+        this.selectedImage = selectedImage;
     }
 }

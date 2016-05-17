@@ -1,6 +1,7 @@
 package josh.land.meemeries.MemeBrowser.MemeBrowser.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +12,11 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-import josh.land.meemeries.MemeBrowser.MemeBrowser.models.Meme;
+import josh.land.meemeries.MemeBrowser.API.models.Meme;
+import josh.land.meemeries.MemeBrowser.MemeFinder.MemeViewerActivity;
 import josh.land.meemeries.MemeBrowser.MemeFinder.models.ImgurGallery;
 import josh.land.meemeries.R;
 
@@ -45,6 +48,7 @@ public class MemeBrowserRecyclerViewAdapter extends RecyclerView.Adapter<MemeBro
         public void setReceivedMemes(final List<Meme> receivedMemes) {
             if (receivedMemes != null && receivedMemes.size() > 0) {
                 this.memes = receivedMemes;
+                Collections.reverse(this.memes);
                 this.notifyDataSetChanged();
             }
         }
@@ -56,8 +60,18 @@ public class MemeBrowserRecyclerViewAdapter extends RecyclerView.Adapter<MemeBro
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            Meme meme = memes.get(position);
+        public void onBindViewHolder(ViewHolder holder, final int position) {
+            final Meme meme = memes.get(position);
+            final Context context = this.mContext;
+
+            holder.view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = MemeViewerActivity.NewApiMemeView(ImgurGallery.memeToGallery(meme), context);
+                    context.startActivity(intent);
+                }
+            });
+
             if (meme.getTitle() != null && !meme.getTitle().isEmpty()) {
                 holder.memeTitle.setVisibility(View.VISIBLE);
                 holder.memeTitle.setText(meme.getTitle());
