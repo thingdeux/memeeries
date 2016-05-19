@@ -14,7 +14,8 @@ public abstract class SharedPrefManager {
 
     public enum ApiType {
         Firebase,
-        ApperyIO
+        ApperyIO,
+        Backendless
     }
 
     public static void setUsername(String username, Context context) {
@@ -38,6 +39,9 @@ public abstract class SharedPrefManager {
             case Firebase:
                 toSet = "firebase";
                 break;
+            case Backendless:
+                toSet = "backendless";
+                break;
             default:
                 toSet = "firebase";
                 break;
@@ -57,6 +61,8 @@ public abstract class SharedPrefManager {
         switch (currentAPI) {
             case "appery.io":
                 return ApiType.ApperyIO;
+            case "backendless":
+                return ApiType.Backendless;
             default:
                 return ApiType.Firebase;
         }

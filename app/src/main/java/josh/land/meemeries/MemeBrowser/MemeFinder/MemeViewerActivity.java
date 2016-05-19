@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 import josh.land.meemeries.MemeBrowser.API.Appery;
+import josh.land.meemeries.MemeBrowser.API.BackendLess;
 import josh.land.meemeries.MemeBrowser.API.FireBaseAPI;
 import josh.land.meemeries.MemeBrowser.API.models.Meme;
 import josh.land.meemeries.MemeBrowser.MemeBrowser.dialogs.UsernameEntryDialog;
@@ -146,6 +147,8 @@ public class MemeViewerActivity extends AppCompatActivity {
                 case ApperyIO:
                     Appery.createMeme(newMeme, null);
                     break;
+                case Backendless:
+                    BackendLess.createMeme(newMeme);
                 default:
                     FireBaseAPI.getInstance().addMeme(newMeme);
                     break;

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.backendless.Backendless;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
@@ -17,7 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import josh.land.meemeries.MemeBrowser.API.Appery;
+import josh.land.meemeries.MemeBrowser.API.BackendLess;
 import josh.land.meemeries.MemeBrowser.API.FireBaseAPI;
+import josh.land.meemeries.MemeBrowser.API.interfaces.IBackendLess;
 import josh.land.meemeries.MemeBrowser.MemeBrowser.adapters.MemeBrowserRecyclerViewAdapter;
 import josh.land.meemeries.MemeBrowser.API.models.Meme;
 import josh.land.meemeries.MemeBrowser.Utils.SharedPrefManager;
@@ -58,10 +61,31 @@ public class MainBrowserFragment extends Fragment {
             case ApperyIO:
                 this.getApeeryMemes();
                 break;
+            case Backendless:
+                this.getBackendlessMemes();
+                break;
             default:
                 this.bindToAllMemeEvents();
                 break;
         }
+    }
+
+    private void getBackendlessMemes() {
+        BackendLess.getAllMemes(new IBackendLess() {
+            @Override
+            public void onSuccess(List<Meme> memes) {
+                receivedMemes.clear();
+                if (memes != null) {
+                    receivedMemes.addAll(memes);
+                }
+                recyclerViewAdapter.setReceivedMemes(receivedMemes);
+            }
+
+            @Override
+            public void onFailure() {
+                // Intentionally empty
+            }
+        });
     }
 
     private void getApeeryMemes() {
@@ -86,8 +110,6 @@ public class MainBrowserFragment extends Fragment {
         FireBaseAPI.getInstance().firebaseRoot.child(this.getString(R.string.firebase_memes_child))
                 .orderByChild("postDate")
                 .addValueEventListener(new ValueEventListener() {
-            // Query Example
-            // Query queryRef = ref.orderByChild("postedBy").equalTo("josh");
 
             @Override
             public void onDataChange(DataSnapshot snapshot) {

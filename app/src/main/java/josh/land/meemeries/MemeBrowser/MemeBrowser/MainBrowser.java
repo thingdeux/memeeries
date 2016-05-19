@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.backendless.Backendless;
 import com.firebase.client.Firebase;
 
 import org.greenrobot.eventbus.EventBus;
@@ -35,6 +36,10 @@ public class MainBrowser extends AppCompatActivity {
         // Will do this irrespective of whether or not the user has firebase selected just for ease.
         Firebase.setAndroidContext(this);
         FireBaseAPI.getInstance().initFireBaseConnection(this);
+        Backendless.initApp( this,
+                this.getString(R.string.backendless_app_id),
+                this.getString(R.string.backendless_secret_key),
+                this.getString(R.string.backendless_version));
 
         EventBus.getDefault().register(this);
 

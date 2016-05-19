@@ -28,6 +28,14 @@
             style="@style/TextAppearance.AppCompat.Medium"
             />
 
+        <RadioButton
+            android:id="@+id/backendless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/api_name_backendless"
+            style="@style/TextAppearance.AppCompat.Medium"
+            />
+
     </RadioGroup>
 
 </RelativeLayout>

@@ -42,6 +42,9 @@ public class ApiSelectionDialog extends DialogFragment {
                                 case "firebase":
                                     SharedPrefManager.setApiType(SharedPrefManager.ApiType.Firebase, d.getContext());
                                     break;
+                                case "backendless":
+                                    SharedPrefManager.setApiType(SharedPrefManager.ApiType.Backendless, d.getContext());
+                                    break;
                             }
                         }
 

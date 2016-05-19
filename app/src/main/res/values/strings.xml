@@ -18,5 +18,6 @@
     <!--Server Api Options-->
     <string name="api_name_appery">Appery</string>
     <string name="api_name_firebase">Firebase</string>
+    <string name="api_name_backendless">Backendless</string>
 
 </resources>
