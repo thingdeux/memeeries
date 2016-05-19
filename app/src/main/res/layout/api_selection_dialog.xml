@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+
+    <RadioGroup
+        android:id="@+id/api_selection_radio_group"
+        android:layout_margin="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+
+        <RadioButton
+            android:id="@+id/appery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/api_name_appery"
+            android:checked="true"
+            style="@style/TextAppearance.AppCompat.Medium"
+            />
+
+        <RadioButton
+            android:id="@+id/firebase"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/api_name_firebase"
+            style="@style/TextAppearance.AppCompat.Medium"
+            />
+
+    </RadioGroup>
+
+</RelativeLayout>

@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import josh.land.meemeries.MemeBrowser.API.Appery;
 import josh.land.meemeries.MemeBrowser.API.FireBaseAPI;
 import josh.land.meemeries.MemeBrowser.API.models.Meme;
 import josh.land.meemeries.MemeBrowser.MemeBrowser.dialogs.UsernameEntryDialog;
@@ -27,7 +28,7 @@ import josh.land.meemeries.R;
 
 public class MemeViewerActivity extends AppCompatActivity {
     public static String IMGUR_IMAGE = "josh.land.meemeries.MemeViewerActivity";
-
+    private SharedPrefManager.ApiType currentlySelectedAPI;
     private ImgurGallery selectedImage;
     private Button sendToServerButton;
 
@@ -35,6 +36,7 @@ public class MemeViewerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        currentlySelectedAPI = SharedPrefManager.getApiType(this);
         setContentView(R.layout.activity_meme_viewer);
         ImageView imageView = (ImageView) findViewById(R.id.imgur_image);
         TextView textView = (TextView) findViewById(R.id.imgur_title);
@@ -139,7 +141,15 @@ public class MemeViewerActivity extends AppCompatActivity {
             newMeme.setImageUrl(this.selectedImage.getLink());
             newMeme.setPostDate(System.currentTimeMillis());
             newMeme.setPostedBy(SharedPrefManager.getUsername(this));
-            FireBaseAPI.getInstance().addMeme(newMeme);
+
+            switch (this.currentlySelectedAPI) {
+                case ApperyIO:
+                    Appery.createMeme(newMeme, null);
+                    break;
+                default:
+                    FireBaseAPI.getInstance().addMeme(newMeme);
+                    break;
+            }
         } else {
             Toast.makeText(MemeViewerActivity.this, "Username Missing or Empty", Toast.LENGTH_SHORT).show();
             finish();

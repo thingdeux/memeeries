@@ -14,13 +14,20 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import josh.land.meemeries.MemeBrowser.API.Appery;
 import josh.land.meemeries.MemeBrowser.API.FireBaseAPI;
 import josh.land.meemeries.MemeBrowser.MemeBrowser.adapters.MemeBrowserRecyclerViewAdapter;
 import josh.land.meemeries.MemeBrowser.API.models.Meme;
+import josh.land.meemeries.MemeBrowser.Utils.SharedPrefManager;
 import josh.land.meemeries.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainBrowserFragment extends Fragment {
+    private SharedPrefManager.ApiType currentlySelectedAPI;
     private RecyclerView recyclerView;
     private MemeBrowserRecyclerViewAdapter recyclerViewAdapter;
     private ArrayList<Meme> receivedMemes = new ArrayList();
@@ -31,7 +38,6 @@ public class MainBrowserFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        this.bindToAllMemeEvents();
         View v = inflater.inflate(R.layout.fragment_main_browser_with_pull, container, false);
         recyclerView = (RecyclerView) v.findViewById(R.id.main_recycler_view);
 
@@ -41,6 +47,38 @@ public class MainBrowserFragment extends Fragment {
         recyclerView.setAdapter(recyclerViewAdapter);
 
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        currentlySelectedAPI = SharedPrefManager.getApiType(this.getContext());
+
+        switch (currentlySelectedAPI) {
+            case ApperyIO:
+                this.getApeeryMemes();
+                break;
+            default:
+                this.bindToAllMemeEvents();
+                break;
+        }
+    }
+
+    private void getApeeryMemes() {
+        Appery.getAllMemes(new Callback<List<Meme>>() {
+            @Override
+            public void onResponse(Call<List<Meme>> call, Response<List<Meme>> response) {
+                receivedMemes.clear();
+                if (response.body() != null) {
+                    receivedMemes.addAll(response.body());
+                }
+                recyclerViewAdapter.setReceivedMemes(receivedMemes);
+            }
+
+            @Override
+            public void onFailure(Call<List<Meme>> call, Throwable t) {
+            }
+        });
     }
 
     private void bindToAllMemeEvents() {

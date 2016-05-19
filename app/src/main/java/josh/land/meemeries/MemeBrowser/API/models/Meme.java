@@ -92,6 +92,14 @@ public class Meme implements Comparable<Meme> {
             },
      */
 
+    public String getApperyId() {
+        return apperyId;
+    }
+
+    public void setApperyId(String apperyId) {
+        this.apperyId = apperyId;
+    }
+
     @Override
     public int compareTo(Meme other) {
         return Long.compare(this.postDate, other.postDate);

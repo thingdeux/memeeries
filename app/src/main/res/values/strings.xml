@@ -12,5 +12,11 @@
 
     <!--Menu Text-->
     <string name="action_settings">Settings</string>
+    <string name="action_change_api">Change API</string>
     <string name="action_set_username">Set Username</string>
+
+    <!--Server Api Options-->
+    <string name="api_name_appery">Appery</string>
+    <string name="api_name_firebase">Firebase</string>
+
 </resources>

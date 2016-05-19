@@ -12,6 +12,11 @@ public abstract class SharedPrefManager {
     private static String USERNAME = "josh.land.shared.pref.username";
     private static String API_TYPE = "josh.land.shared.pref.api.type";
 
+    public enum ApiType {
+        Firebase,
+        ApperyIO
+    }
+
     public static void setUsername(String username, Context context) {
         PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
@@ -24,15 +29,36 @@ public abstract class SharedPrefManager {
                 .getString(USERNAME, null);
     }
 
-    public static void setIsUsingFirebase(boolean useFirebase, Context context) {
+    public static void setApiType(ApiType apiType, Context context) {
+        String toSet;
+        switch (apiType) {
+            case ApperyIO:
+                toSet = "appery.io";
+                break;
+            case Firebase:
+                toSet = "firebase";
+                break;
+            default:
+                toSet = "firebase";
+                break;
+        }
+
+
         PreferenceManager.getDefaultSharedPreferences(context)
                 .edit()
-                .putBoolean(API_TYPE, useFirebase)
+                .putString(API_TYPE, toSet)
                 .apply();
     }
 
-    public static boolean getIsUsingFirebase(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(API_TYPE, true);
+    public static ApiType getApiType(Context context) {
+        String currentAPI = PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(API_TYPE, "appery.io");
+
+        switch (currentAPI) {
+            case "appery.io":
+                return ApiType.ApperyIO;
+            default:
+                return ApiType.Firebase;
+        }
     }
 }
