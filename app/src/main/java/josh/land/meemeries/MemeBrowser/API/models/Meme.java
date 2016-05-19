@@ -1,9 +1,27 @@
 package josh.land.meemeries.MemeBrowser.API.models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class Meme implements Comparable<Meme> {
+    @Expose
+    @SerializedName("id")
     private Double id;
+
+    @Expose
+    @SerializedName("_id")
+    private String apperyId;   // Appery.io id's are hex
+
+    @Expose
+    @SerializedName("title")
     private String title;
+
+    @Expose
+    @SerializedName("imageUrl")
     private String imageUrl;
+
+    @Expose
+    @SerializedName("postedBy")
     private String postedBy;
     /*
          The Memes node is indexed on postedBy - so that querying memes by user is fast.
@@ -13,6 +31,8 @@ public class Meme implements Comparable<Meme> {
             }
          */
 
+    @Expose
+    @SerializedName("postDate")
     private long postDate;
 
     public Meme() {
