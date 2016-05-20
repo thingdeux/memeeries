@@ -14,6 +14,9 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +26,7 @@ import josh.land.meemeries.MemeBrowser.API.FireBaseAPI;
 import josh.land.meemeries.MemeBrowser.API.interfaces.IBackendLess;
 import josh.land.meemeries.MemeBrowser.MemeBrowser.adapters.MemeBrowserRecyclerViewAdapter;
 import josh.land.meemeries.MemeBrowser.API.models.Meme;
+import josh.land.meemeries.MemeBrowser.MemeBrowser.events.ApiChoiceModified;
 import josh.land.meemeries.MemeBrowser.Utils.SharedPrefManager;
 import josh.land.meemeries.R;
 import retrofit2.Call;
@@ -55,6 +59,8 @@ public class MainBrowserFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        EventBus.getDefault().register(this);
+
         currentlySelectedAPI = SharedPrefManager.getApiType(this.getContext());
 
         switch (currentlySelectedAPI) {
@@ -70,11 +76,16 @@ public class MainBrowserFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
     private void getBackendlessMemes() {
         BackendLess.getAllMemes(new IBackendLess() {
             @Override
             public void onSuccess(List<Meme> memes) {
-                receivedMemes.clear();
                 if (memes != null) {
                     receivedMemes.addAll(memes);
                 }
@@ -89,7 +100,7 @@ public class MainBrowserFragment extends Fragment {
     }
 
     private void getApeeryMemes() {
-        Appery.getAllMemes(new Callback<List<Meme>>() {
+        Appery.getAllMemes(this.getContext(), new Callback<List<Meme>>() {
             @Override
             public void onResponse(Call<List<Meme>> call, Response<List<Meme>> response) {
                 receivedMemes.clear();
@@ -128,5 +139,11 @@ public class MainBrowserFragment extends Fragment {
                 Log.e("ERROR", "Connection Error " + error);
             }
         });
+    }
+
+    @Subscribe
+    public void onEvent(ApiChoiceModified event) {
+        this.receivedMemes.clear();
+        recyclerViewAdapter.notifyDataSetChanged();
     }
 }

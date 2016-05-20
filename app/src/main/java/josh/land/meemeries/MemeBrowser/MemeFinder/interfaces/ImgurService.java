@@ -5,6 +5,7 @@ import java.util.List;
 import josh.land.meemeries.MemeBrowser.MemeFinder.models.ImgurGalleryWrapper;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.Path;
 
@@ -15,16 +16,10 @@ import retrofit2.http.Path;
  */
 public interface ImgurService {
 
-    @Headers({
-            "Authorization: Client-ID 7f6ad80b210cbac"
-    })
     @GET("gallery/hot/viral/{page}.json")
-    Call<ImgurGalleryWrapper> listViralGalleries(@Path("page") String pageNumber);
+    Call<ImgurGalleryWrapper> listViralGalleries(@Path("page") String pageNumber, @Header("Authorization") String clientId);
 
-    @Headers({
-            "Authorization: Client-ID 7f6ad80b210cbac"
-    })
     @GET("g/memes/{page}.json")
-    Call<ImgurGalleryWrapper> listMemeGalleries(@Path("page") String pageNumber);
+    Call<ImgurGalleryWrapper> listMemeGalleries(@Path("page") String pageNumber, @Header("Authorization") String clientId);
 
 }

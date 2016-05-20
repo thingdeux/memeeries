@@ -5,12 +5,18 @@
     <string name="firebase_memes_child">memes</string>
     <string name="imgur_base_api_url">https://api.imgur.com/3/</string>
 
-
-
-    <!--Appery-->
-
     <!--BackendLess-->
     <string name="backendless_version">v1</string>
+
+
+
+
+    <!--All Keys here will be revoked and changed after May 25th-->
+    <!--To use, register for the correct service and replace the keys here.-->
+
+    <!--Super Secret Expiring API Keys-->
+    <string name="appery_database_id">573ddb02e4b08a80ca8e4c16</string>
+    <string name="imgur_api_key">Client-ID 7f6ad80b210cbac</string>
     <string name="backendless_app_id">9D037D15-8428-8DB3-FF50-1E33C1425400</string>
     <string name="backendless_secret_key">2F083312-5C4E-890B-FFD8-0ECE32E90500</string>
 

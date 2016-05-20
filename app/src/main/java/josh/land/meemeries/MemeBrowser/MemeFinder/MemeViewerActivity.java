@@ -145,10 +145,11 @@ public class MemeViewerActivity extends AppCompatActivity {
 
             switch (this.currentlySelectedAPI) {
                 case ApperyIO:
-                    Appery.createMeme(newMeme, null);
+                    Appery.createMeme(newMeme, this, null);
                     break;
                 case Backendless:
                     BackendLess.createMeme(newMeme);
+                    break;
                 default:
                     FireBaseAPI.getInstance().addMeme(newMeme);
                     break;

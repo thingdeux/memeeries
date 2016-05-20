@@ -1,5 +1,6 @@
 package josh.land.meemeries.MemeBrowser.API;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.util.List;
@@ -7,6 +8,8 @@ import java.util.List;
 import josh.land.meemeries.MemeBrowser.API.interfaces.ApperyService;
 import josh.land.meemeries.MemeBrowser.API.models.ApperyUser;
 import josh.land.meemeries.MemeBrowser.API.models.Meme;
+
+import josh.land.meemeries.R;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -22,7 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public abstract class Appery {
 
     // Boolean returned is successful or not.
-    public static void createMeme(Meme meme, final Callback<Meme> callback) {
+    public static void createMeme(Meme meme, final Context context, final Callback<Meme> callback) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.appery.io/rest/1/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -30,7 +33,7 @@ public abstract class Appery {
 
         ApperyService service = retrofit.create(ApperyService.class);
 
-        Call<Meme> memeSubmission = service.postMeme(meme);
+        Call<Meme> memeSubmission = service.postMeme(meme, context.getString(R.string.appery_database_id));
 
         memeSubmission.enqueue(new Callback<Meme>() {
             @Override
@@ -57,7 +60,7 @@ public abstract class Appery {
         });
     }
 
-    public static void getAllMemes(final Callback<List<Meme>> callback) {
+    public static void getAllMemes(final Context context, final Callback<List<Meme>> callback) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.appery.io/rest/1/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -65,7 +68,7 @@ public abstract class Appery {
 
         ApperyService service = retrofit.create(ApperyService.class);
 
-        Call<List<Meme>> allMemes = service.listAllMemes();
+        Call<List<Meme>> allMemes = service.listAllMemes(context.getString(R.string.appery_database_id));
 
         allMemes.enqueue(new Callback<List<Meme>>() {
             @Override
@@ -89,7 +92,7 @@ public abstract class Appery {
         });
     }
 
-    public static void createUser(ApperyUser user, final Callback<ApperyUser> callback) {
+    public static void createUser(ApperyUser user, final Context context, final Callback<ApperyUser> callback) {
         // relative URI - db/users/
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.appery.io/rest/1/")
@@ -98,7 +101,7 @@ public abstract class Appery {
 
         ApperyService service = retrofit.create(ApperyService.class);
 
-        Call<ApperyUser> userReq = service.createUser(user);
+        Call<ApperyUser> userReq = service.createUser(user, context.getString(R.string.appery_database_id));
 
         userReq.enqueue(new Callback<ApperyUser>() {
             @Override

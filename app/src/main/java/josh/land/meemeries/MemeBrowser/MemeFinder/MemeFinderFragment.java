@@ -60,7 +60,7 @@ public class MemeFinderFragment extends Fragment {
 
         ImgurService service = retrofit.create(ImgurService.class);
 
-        Call<ImgurGalleryWrapper> images = service.listMemeGalleries(page);
+        Call<ImgurGalleryWrapper> images = service.listMemeGalleries(page, this.getString(R.string.imgur_api_key));
         images.enqueue(new Callback<ImgurGalleryWrapper>() {
             @Override
             public void onResponse(Call<ImgurGalleryWrapper> imgurWrapper, Response<ImgurGalleryWrapper> response) {
