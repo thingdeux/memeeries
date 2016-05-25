@@ -56,7 +56,7 @@ public abstract class SharedPrefManager {
 
     public static ApiType getApiType(Context context) {
         String currentAPI = PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(API_TYPE, "appery.io");
+                .getString(API_TYPE, "firebase");
 
         switch (currentAPI) {
             case "appery.io":
