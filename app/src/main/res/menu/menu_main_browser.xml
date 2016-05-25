@@ -4,6 +4,13 @@
     tools:context=".MemeBrowser.MemeBrowser.MainBrowser">
 
     <item
+        android:id="@+id/action_refresh"
+        android:orderInCategory="60"
+        android:title="@string/action_refresh"
+        android:icon="@drawable/ic_refresh"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/action_set_username"
         android:orderInCategory="80"
         android:title="@string/action_set_username"

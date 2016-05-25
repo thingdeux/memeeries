@@ -24,7 +24,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/api_name_appery"
-            android:checked="true"
             style="@style/TextAppearance.AppCompat.Medium"
             />
 
